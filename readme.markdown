@@ -1,5 +1,5 @@
 # FATIGUE
-## Import your Nike+ runs to Garmin Connect
+**Import your Nike+ runs to Garmin Connect**
 
 ## It looks like this
 
@@ -30,20 +30,13 @@
 ## What you get
 
 This grabs run data from the low-fi Nike+ histories, so while it won't have GPS
-maps like Garmin rocks, we'll populate your Garmin history with Nike+ data for:
-
-- Distance
-- Calories
-- Duration
-- Date Run
+maps like what Garmin rocks, we'll populate your Garmin history with Nike+ data
+for things like distance run, how long your run took, what day and time it was
+run, and nifty things like that.
 
 ## Install
 
     gem install fatigue
-
-## Run (lol, puns)
-
-    $ fatigue
 
 ## Can I see your ID
 
@@ -58,6 +51,16 @@ WITH ALL DUE HASTE.
 
 You'll also need to make sure your runs are public. Click on your face on the
 sidebar, go to settings, and share your life away. No need to be modest.
+
+## Contribute
+
+Pretty sure Nike will change their site, Garmin will change their site, or
+both, so this may be a bit unstable, from time to time. Have no fear; open
+source is here.
+
+If you'd like to contribute fixes (thanks!), fork this project, add your
+changes, make sure tests pass with `rake`, and send me a pull request.
+High-fives for new methods that are properly [TomDoc](http://tomdoc.org)'d.
 
 # JUST DO IT™
 Love, @[holman](http://twitter.com/holman).
