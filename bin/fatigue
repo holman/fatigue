@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+
+require 'rubygems'
+require 'fatigue'
+
+art_lol = <<ART
+
+  __      _   _                  
+ / _|    | | (_)                 
+| |_ __ _| |_ _  __ _ _   _  ___ 
+|  _/ _` | __| |/ _` | | | |/ _ \\
+| || (_| | |_| | (_| | |_| |  __/
+|_| \\__,_|\\__|_|\\__, |\\__,_|\\___|
+                 __/ | for nike+garmin
+                 |___/           
+
+ART
+
+puts "\n"
+puts art_lol
+puts "\n"
+
+print 'Nike+ User ID number:    '
+id = gets.chomp
+
+print 'Garmin Connect Username: '
+garmin_username = gets.chomp
+
+print 'Garmin Connect Password: '
+system "stty -echo"
+garmin_password = gets.chomp
+system "stty echo"
+
+nike = Fatigue::Nike.new(id)
+garmin = Fatigue::Garmin.new(garmin_username,garmin_password)
+
+puts "\n\nHARDCORE RUNNING ACTION: "
+
+if garmin.login 
+  number = garmin.post_runs(nike.runs)
+
+  puts <<DONE
+
+
+
+Neato! We just imported #{number} run#{'s' if number!=1}. See them for yourself at:
+  http://connect.garmin.com/activities
+
+DONE
+
+else
+  puts "\nThere was a problem logging you into Garmin Connect."
+end

@@ -1,0 +1,59 @@
+<plusService>
+  <status>success</status>
+  <user externalProfileID="1" id="1">
+    <status>confirmed</status>
+    <gender>female</gender>
+    <state>LA</state>
+    <city>Bon Temps</city>
+    <country>US</country>
+    <plusLevel>2</plusLevel>
+    <activeOwnedChallengeCount>0</activeOwnedChallengeCount>
+  </user>
+  <userTotals>
+    <totalDistance>52</totalDistance>
+    <totalDuration>10000000</totalDuration>
+    <totalRunsWithRoutes>0</totalRunsWithRoutes>
+    <totalRuns>5</totalRuns>
+    <totalCalories>10000</totalCalories>
+    <totalWorkouts>0</totalWorkouts>
+    <totalCardioDistance>0.0</totalCardioDistance>
+    <averageRunsPerWeek>1.0</averageRunsPerWeek>
+    <preferredRunDayOfWeek>Sunday   </preferredRunDayOfWeek>
+    <pedoWorkouts>0</pedoWorkouts>
+    <totalSteps>0</totalSteps>
+    <longestStepcount>0</longestStepcount>
+    <averageStepcount>0.0</averageStepcount>
+    <caloriesPedometer>0</caloriesPedometer>
+    <totalCaloriesPedometer>0</totalCaloriesPedometer>
+    <totalRunsWithHeartrate>0</totalRunsWithHeartrate>
+    <previousSyncTime>2010-08-05T07:50:53+00:00</previousSyncTime>
+    <lastCalculated>2010-08-23T03:24:18+00:00</lastCalculated>
+  </userTotals>
+  <userOptions>
+    <screenName><![CDATA[sookie]]></screenName>
+    <distanceUnit>mi</distanceUnit>
+    <dateFormat>MM/DD/YY</dateFormat>
+    <startWeek>Su</startWeek>
+    <avatar>http://avatar.nikeplus.com/vampire.png</avatar>
+    <uploadedAvatar>http://avatar.nikeplus.com/vampire.png</uploadedAvatar>
+    <isPublic>true</isPublic>
+    <powerSong>
+      <artist><![CDATA[Jace Everett]]></artist>
+      <album><![CDATA[True Blood]]></album>
+      <title><![CDATA[Bad Things]]></title>
+    </powerSong>
+    <emailGoalEnding>false</emailGoalEnding>
+    <emailGoalComplete>false</emailGoalComplete>
+    <emailWeeklyTraining>false</emailWeeklyTraining>
+    <emailChallengeEnding>false</emailChallengeEnding>
+    <emailChallengeStarting>false</emailChallengeStarting>
+    <emailChallengeWinner>false</emailChallengeWinner>
+  </userOptions>
+  <mostRecentRun id="2" workoutType="standard">
+    <startTime>2010-08-04T19:37:47-07:00</startTime>
+    <distance>3.4539</distance>
+    <duration>976277</duration>
+    <workoutType>standard</workoutType>
+    <equipment>ipod</equipment>
+  </mostRecentRun>
+</plusService>

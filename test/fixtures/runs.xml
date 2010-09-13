@@ -1,0 +1,41 @@
+<plusService>
+  <status>success</status>
+  <runList endIndex="-1" startIndex="0">
+    <run id="1" workoutType="standard">
+      <startTime>2009-03-17T04:02:43+00:00</startTime>
+      <distance>3</distance>
+      <duration>900000</duration>
+      <syncTime>2009-03-17T04:02:43+00:00</syncTime>
+      <calories>0.0</calories>
+      <name/>
+      <description/>
+      <howFelt/>
+      <weather/>
+      <terrain/>
+      <intensity/>
+      <gpxId/>
+      <equipmentType>ipod</equipmentType>
+    </run>
+    <run id="2" workoutType="standard">
+      <startTime>2008-05-21T13:28:59-05:00</startTime>
+      <distance>5</distance>
+      <duration>1000000</duration>
+      <syncTime>2008-05-21T18:59:38+00:00</syncTime>
+      <calories>244.0</calories>
+      <name><![CDATA[ran away from the pretty blonde]]></name>
+      <description><![CDATA[ran away from the pretty blonde]]></description>
+      <howFelt/>
+      <weather/>
+      <terrain/>
+      <intensity/>
+      <gpxId/>
+      <equipmentType>ipod</equipmentType>
+    </run>
+  </runList>
+  <runListSummary>
+    <runs>2</runs>
+    <distance>8</distance>
+    <duration>1900000</duration>
+    <calories>244.0</calories>
+  </runListSummary>
+</plusService>
