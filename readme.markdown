@@ -36,7 +36,29 @@ run, and nifty things like that.
 
 ## Install
 
+For the technical:
+
     gem install fatigue
+
+If you have no idea what the heck a gem install is, have no fear; none of this
+is hard to do.
+
+**For Mac Users**
+
+Open up your `Applications` folder, scroll down to `Utilities`, and then open
+up `Terminal`. Once you're there, type `sudo gem install fatigue` and then
+enter your Mac password when prompted. This will download the code to your
+machine. When it tells you "3 gems installed", type `fatigue` and enjoy the
+show.
+
+**For Windows Users**
+
+Microsoft makes everything harder since you'll have to install Ruby yourself.
+Until someone forks this repository with better Windows instructions (hint
+hint!), the best I can give you is to go try
+[RubyInstaller](http://rubyinstaller.org), install it, and then see if you can
+run `gem install fatigue` in it. Somehow. I don't know really, but I have a lot
+of faith that you can manage it. You seem like a strong-willed individual.
 
 ## Can I see your ID
 
