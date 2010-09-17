@@ -36,7 +36,7 @@ run, and nifty things like that.
 
 ## Install
 
-For the technical:
+**For the Techies**
 
     gem install fatigue
 
