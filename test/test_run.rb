@@ -16,7 +16,7 @@ context "Run" do
 
   test "date conversion" do
     @run.started_at = '2009-03-17T04:02:43+00:00'
-    assert_equal @run.started_at.to_s, 'Tue Mar 17 04:02:43 UTC 2009'
+    assert_equal @run.started_at, Time.parse('Tue Mar 17 04:02:43 UTC 2009')
   end
 
   test "formatted name" do
