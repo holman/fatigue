@@ -8,5 +8,5 @@ require 'mechanize'
 require 'progressbar'
 
 module Fatigue
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
 end
