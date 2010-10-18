@@ -53,7 +53,7 @@ module Fatigue
       form.field_with(:name => 'activityTimeZoneDecoration:activityTimeZone').
         options.select { |option|
           # select option where our timezones are equal (-07:00, etc)
-          option.text.gsub(':','') =~ /#{run.started_at.strftime('%z')}/
+          option.text.gsub(':','') =~ /#{run.started_at.getlocal.strftime('%z')}/
         }.first.select
       form['activityNameDecoration:activityName'] = run.formatted_name
       form.field_with(:name => 'activityTypeDecoration:activityType').
