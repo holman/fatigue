@@ -1,0 +1,23 @@
+PATH
+  remote: .
+  specs:
+    fatigue (0.0.3)
+      mechanize (= 1.0.0)
+      nokogiri (>= 1.4.0)
+      ruby-progressbar (= 0.0.9)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    mechanize (1.0.0)
+      nokogiri (>= 1.2.1)
+    nokogiri (1.4.4)
+    rr (0.10.11)
+    ruby-progressbar (0.0.9)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  fatigue!
+  rr (= 0.10.11)
