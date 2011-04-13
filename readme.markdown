@@ -51,6 +51,11 @@ enter your Mac password when prompted. This will download the code to your
 machine. When it tells you "3 gems installed", type `fatigue` and enjoy the
 show.
 
+NOTE: If you run into a problem during installation where it spits out `ERROR:
+Failed to build gem native extension`, that means you need to install XCode.
+It's available on your OS X install DVD or through the Mac App Store. We're
+working on fixing this so you don't need to install XCode in the future.
+
 **For Windows Users**
 
 Microsoft makes everything harder since you'll have to install Ruby yourself.
