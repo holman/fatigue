@@ -39,6 +39,25 @@ module Fatigue
       page.inspect =~ /aren't signed in/ ? true : false
     end
 
+    # Public: gets the number, time and date formats from the settings page
+    #
+    # IF the user has different settings from the default, the form may return 
+    # errors when trying to post runs
+    #
+    def get_formats
+      page = @agent.get('http://connect.garmin.com/settings')
+      html = Nokogiri::HTML(page.body)
+      scr = html.css("script").select { |s| s.text =~ /(DATE_FORMAT)/ }.first.text
+
+      date_value   = scr.match(/DATE_FORMAT = '(.+)'/)[1]
+      time_value   = scr.match(/TIME_FORMAT = '(.+)'/)[1]
+      number_value = scr.match(/NUMBER_FORMAT = '(.+)'/)[1]
+      
+      @date_format    = date_value.gsub('yyyy', '%Y').gsub('dd', '%d').gsub('MM', '%m')
+      @time_format    = (time_value == 'twenty_four' ? '%H:%M' : '%I:%M %p' )
+      @decimal_format = (number_value == 'decimal_comma' ? ',' : '.')
+    end
+    
     # Public: posts a new Run to your logged-in Garmin account.
     #
     # run - A Fatigue::Run instance.
@@ -46,34 +65,43 @@ module Fatigue
     # Returns true if success, false if failure. Requires #login to be called
     # prior to execution.
     def post_run(run)
-      manual_run = @agent.get('http://connect.garmin.com/activity/manual')
-      form = manual_run.form('manualActivityForm')
-      form.activityBeginDate = run.started_at.strftime('%m/%d/%Y')
-      form.activityBeginTime = run.started_at.strftime('%I:%M %p')
-      form.field_with(:name => 'activityTimeZoneDecoration:activityTimeZone').
-        options.select { |option|
-          # select option where our timezones are equal (-07:00, etc)
-          zone = run.started_at.getlocal.strftime('%z').gsub('+','\+')
-          option.text.gsub(':','') =~ /#{zone}/
-        }.first.select
-      form['activityNameDecoration:activityName'] = run.formatted_name
-      form.field_with(:name => 'activityTypeDecoration:activityType').
-        options.select { |option| option.value == 'running' }.
-        first.select
-      form['speedPaceContainer:activitySummarySumDuration'] = run.hours
-      form['speedPaceContainer:activitySummarySumDurationMinute'] = run.minutes
-      form['speedPaceContainer:activitySummarySumDurationSecond'] = run.seconds
-      form['speedPaceContainer:activitySummarySumDistanceDecoration:activitySummarySumDistance'] = run.distance
-      form.field_with(:name => 'speedPaceContainer:activitySummarySumDistanceDecoration:distanceUnit').
-        options.select { |option| option.text == run.unit }.first.select
-      form['descriptionDecoration:description'] = run.description
-      form['calories'] = run.calories
-      form['AJAXREQUEST'] = '_viewRoot'
-      form['saveButton'] = 'saveButton'
+      begin
+        manual_run = @agent.get('http://connect.garmin.com/activity/manual')
+        form = manual_run.form('manualActivityForm')
+        form.activityBeginDate = run.started_at.strftime(@date_format)
+        form.activityBeginTime = run.started_at.strftime(@time_format)
+        form.field_with(:name => 'activityTimeZoneDecoration:activityTimeZone').
+          options.select { |option|
+            # select option where our timezones are equal (-07:00, etc)
+            zone = run.started_at.getlocal.strftime('%z').gsub('+','\+').gsub('0000', '\(GMT\)')
+            option.text.gsub(':','') =~ /#{zone}/
+          }.first.select
+        form['activityNameDecoration:activityName'] = run.formatted_name
+        form.field_with(:name => 'activityTypeDecoration:activityType').
+          options.select { |option| option.value == 'running' }.
+          first.select
+        form['speedPaceContainer:activitySummarySumDuration'] = run.hours
+        form['speedPaceContainer:activitySummarySumDurationMinute'] = run.minutes
+        form['speedPaceContainer:activitySummarySumDurationSecond'] = run.seconds
+        form['speedPaceContainer:activitySummarySumDistanceDecoration:activitySummarySumDistance'] = run.distance.to_s.gsub('.', @decimal_format)
+        form.field_with(:name => 'speedPaceContainer:activitySummarySumDistanceDecoration:distanceUnit').
+          options.select { |option| option.text == run.unit }.first.select
+        form['descriptionDecoration:description'] = run.description
+        form['calories'] = run.calories
+        form['AJAXREQUEST'] = '_viewRoot'
+        form['saveButton'] = 'saveButton'
       
-      resp = @agent.submit(form, form.buttons_with(:name => 'saveButton').first)
-
-      verify_response(resp.body)
+        resp = @agent.submit(form, form.buttons_with(:name => 'saveButton').first)
+        verify_response(resp.body)
+      rescue NoMethodError => e
+        puts "Darn!\nGarmin logged us out while attempting to post a run on #{run.started_at.strftime(@date_format)}. Logging back in!"
+        if login
+          post_run(run)
+        else
+          puts "Couldn't log back in. Aborting."
+          exit
+        end
+      end
     end
 
     # Public: Posts a collection of Runs to your logged-in Garmin account.
@@ -83,6 +111,7 @@ module Fatigue
     # Returns the number of runs successfully posted to the Garmin account.
     # Requires #login to be called prior to execution.
     def post_runs(runs)
+      get_formats 
       progress = ProgressBar.new("  status", runs.size)
       runs.each do |run|
         post_run(run)
