@@ -88,9 +88,20 @@ module Fatigue
           options.select { |option| option.text == run.unit }.first.select
         form['descriptionDecoration:description'] = run.description
         form['calories'] = run.calories
+        
+        # apparently, average pace can't be set like other fields, but will be calculated indirectly, server-side, after these ajax posts
+        if !succesfully_posted_pace_inputs =
+          post_ajax_field(form, 'activityTypeDecoration:activityType') and
+          post_ajax_field(form, 'speedPaceContainer:activitySummarySumDuration') and
+          post_ajax_field(form, 'speedPaceContainer:activitySummarySumDurationMinute') and
+          post_ajax_field(form, 'speedPaceContainer:activitySummarySumDurationSecond') and 
+          post_ajax_field(form, 'speedPaceContainer:activitySummarySumDistanceDecoration:activitySummarySumDistance')
+          return false
+        end
+        
         form['AJAXREQUEST'] = '_viewRoot'
         form['saveButton'] = 'saveButton'
-      
+        
         resp = @agent.submit(form, form.buttons_with(:name => 'saveButton').first)
         verify_response(resp.body)
       rescue NoMethodError => e
@@ -111,7 +122,7 @@ module Fatigue
     # Returns the number of runs successfully posted to the Garmin account.
     # Requires #login to be called prior to execution.
     def post_runs(runs)
-      get_formats 
+      get_formats
       progress = ProgressBar.new("  status", runs.size)
       runs.each do |run|
         post_run(run)
@@ -124,6 +135,34 @@ module Fatigue
 
   # INTERNAL METHODS #########################################################
 
+    # Posts, via ajax, one field of the form to be posted the logged-in Garmin account
+    #
+    # form - The form containing the field and value to post
+    # field - The name of the field to post
+    #
+    # Returns true if success, false if failure. Requires #login to have been called an a valid form.
+    def post_ajax_field(form, field)
+      # find the additional form values required for the ajax post
+      onchange = form.field_with(:name => field).node.attributes["onchange"].value
+      if !(onchange =~ /AJAX\.Submit\('([\w:]+)',.*,'parameters':\{'([\w:]+)':'(\2)'\}/) 
+        puts "Posting #{field} via ajax is unsupported"
+        exit
+      end
+      ajaxRequest, ajaxField = $1, $2
+      
+      begin
+        form['AJAXREQUEST'] = ajaxRequest
+        form[ajaxField] = ajaxField
+        
+        resp = @agent.submit(form)
+        verify_ajax_response(resp.body)
+      ensure
+        # don't litter
+        form['AJAXREQUEST'] = ''
+        form[ajaxField] = ''
+      end
+    end
+
     # Verifies whether the response returned is successful or not. For some
     # reason Garmin isn't spitting out a redirect to the newly-created run, so
     # instead we hackishly check if an error <span> is filled.
@@ -134,7 +173,15 @@ module Fatigue
       html.css('#ErrorContainer').text.strip == ''
     end
 
+    # Verifies whether the ajax response returned is succesful or not.
+    #
+    # Returns a Boolean value for whether the ajax response was succesful or not.
+    def verify_ajax_response(html_body)
+      html = Nokogiri::HTML(html_body)
+      !html.xpath("//meta[@id='Ajax-Response' and @content='true']").empty?
+    end
 
-  end
+
+   end
 
 end
