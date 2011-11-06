@@ -182,6 +182,6 @@ module Fatigue
     end
 
 
-   end
+  end
 
 end
