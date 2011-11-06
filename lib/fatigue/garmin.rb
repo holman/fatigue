@@ -175,7 +175,7 @@ module Fatigue
 
     # Verifies whether the ajax response returned is succesful or not.
     #
-    # Returns a Boolean value for whether the ajax response was succesful or not.
+    # Returns a Boolean value for whether the ajax response was successful or not.
     def verify_ajax_response(html_body)
       html = Nokogiri::HTML(html_body)
       !html.xpath("//meta[@id='Ajax-Response' and @content='true']").empty?
