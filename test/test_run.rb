@@ -8,7 +8,13 @@ context "Run" do
   
   test "basic setters" do
     @run.duration = 5
-    assert_equal 5,   @run.duration
+    assert_equal 5, @run.duration
+
+    @run.distance = 7
+    assert_equal 7, @run.distance
+
+    @run.unit = 'km'
+    assert_equal 'Kilometers', @run.unit
 
     @run.calories = 100
     assert_equal 100, @run.calories
@@ -38,6 +44,19 @@ context "Run" do
   test "hours" do
     @run.duration = 5000000
     assert_equal 1, @run.hours
+  end
+
+  test "distance conversion" do
+    @run.distance = '1'
+    @run.unit = 'km'
+    assert_in_delta 0.621, @run.distance_to_mi, 0.001
+  end
+
+  test "pace" do
+    @run.distance = 14.484096 
+    @run.unit = 'km'
+    @run.duration = 5400000 
+    assert_equal '10:00', @run.pace
   end
 
 end
