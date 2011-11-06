@@ -75,6 +75,19 @@ module Fatigue
     end
 
 
+    # Public: The pace of the run.
+    #
+    # speed: The String pace of the run in minutes per mile (mmm:ss).
+    def pace 
+      pace_f = (duration.to_f / 1000 / 60) / distance_to_mi
+      mins = pace_f.to_i
+      secs = (pace_f - mins) * 60
+      p = "%d:%02d" % [mins, secs]
+      puts p
+      p
+    end
+
+
     # Public: The time the run was started.
     #
     # started_at: The String time in ISO 8601.
@@ -102,6 +115,17 @@ module Fatigue
 
     # Public: The description of the run.
     attr_reader :description
+
+
+  # INTERNAL METHODS #########################################################
+
+    # Private: The distance of the run in miles.
+    def distance_to_mi
+      case @unit
+      when 'mi' then distance.to_f
+      when 'km' then distance.to_f * 0.621371192
+      end
+    end
 
   end
 
