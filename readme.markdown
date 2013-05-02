@@ -32,7 +32,7 @@
 This grabs run data from the low-fi Nike+ histories, so while it won't have GPS
 maps like what Garmin rocks, we'll populate your Garmin history with Nike+ data
 for things like distance run, how long your run took, what day and time it was
-run, and nifty things like that.
+run, and shit.
 
 ## Install
 
