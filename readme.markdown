@@ -1,6 +1,14 @@
 # FATIGUE
 **Import your Nike+ runs to Garmin Connect**
 
+## Deprecated
+
+**Note**: I'm pretty sure after Nike changed their site, Fatigue doesn't work
+anymore. Mega bummer.
+
+If you're a developer, Pull Requests are definitely accepted- after my initial
+import of runs I have no need for Fatigue anymore, ironically enough.
+
 ## It looks like this
 
     $ fatigue
